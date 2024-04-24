@@ -9,6 +9,13 @@
 (require 'dash)
 
 ;;;###autoload
+(defun ad:consult-line@with-orderless (fn &rest args)
+  "`consult-line' を `orderless' の補完スタイルで実行する.
+FN, ARGS はアドバイス対象の関数とその引数."
+  (let ((completion-styles '(orderless)))
+    (apply fn args)))
+
+;;;###autoload
 (defun e:consult-faces ()
   "Face の一覧を `consult' で表示する."
   (interactive)

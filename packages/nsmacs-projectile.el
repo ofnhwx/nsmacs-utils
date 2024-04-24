@@ -5,8 +5,8 @@
 
 ;;; Code:
 
-(require 'komunan-lisp-library)
 (require 'projectile)
+(require 'komunan-lisp-library)
 
 ;;;###autoload
 (defun e:setup-projectile-known-projects ()

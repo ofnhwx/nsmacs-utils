@@ -7,6 +7,7 @@
 
 (require 'apheleia)
 (require 'dash)
+(require 's)
 
 ;;;###autoload
 (defun e:apheleia-inhibit-unnecesary-major-mode ()

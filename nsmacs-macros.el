@@ -61,7 +61,7 @@
   "高優先度の設定を実行する."
   (setq e:high-priority-config-queue-timer
         (run-with-timer
-         0.0 0.001
+         0.1 0.001
          (lambda ()
            (if e:high-priority-config-queue
                (let ((inhibit-message t))
@@ -73,7 +73,7 @@
   "低優先度の設定を実行する."
   (setq e:low-priority-config-queue-timer
         (run-with-timer
-         0.2 0.005
+         0.5 0.005
          (lambda ()
            (if e:low-priority-config-queue
                (let ((inhibit-message t))
@@ -118,8 +118,8 @@ KEY, DEF の組み合わせをを一つのペアとし、BINDINGS をして任�
          :evil-states (motion normal visual))
        (general-def ,map ,@general-bindings)
        ,(when prefix-bindings
-         `(which-key-add-keymap-based-replacements ,map
-            ,@prefix-bindings)))))
+          `(which-key-add-keymap-based-replacements ,map
+             ,@prefix-bindings)))))
 
 (defmacro e:define-minor-mode-switch (minor-mode)
   "MINOR-MODE の ON/OFF を切り替える関数を定義する."

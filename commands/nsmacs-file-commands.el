@@ -6,6 +6,7 @@
 ;;; Code:
 
 (require 'f)
+(require 'borg)
 
 ;;;###autoload
 (defun e:file/find-user-init-file ()
@@ -24,6 +25,12 @@
   "`user-emacs-directory' にある `init.org' を開く."
   (interactive)
   (find-file-existing (f-expand "init.org" user-emacs-directory)))
+
+;;;###autoload
+(defun e:file/find-utils-directory ()
+  "`nsmacs-utils' のディレクトリを開く."
+  (interactive)
+  (find-file-existing (f-expand "nsmacs-utils" borg-drones-directory)))
 
 ;;;###autoload
 (defun e:make-config ()

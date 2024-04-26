@@ -144,5 +144,21 @@ KEY, DEF の組み合わせをを一つのペアとし、BINDINGS をして任�
      :prefix-map ',(intern (format "e:%s-command-map" name))
      ,@body))
 
+(defmacro e:setup-projectile-rails-annotation (type dir &optional suffix)
+  "`projectile-rails-find-{TYPE}' で使用する `marginalia' の設定を用意する.
+DIR, SUFFIX はよい感じに設定してください."
+  (let ((command   (intern (format "projectile-rails-find-%s" type)))
+        (category  (intern (format "rails-%s-file" type)))
+        (annotator (intern (format "marginalia-annotate-rails-%s-file" type))))
+    `(progn
+       (defun ,annotator (cand)
+         (when-let* ((root    (marginalia--project-root))
+                     (dir     (f-expand ,dir root))
+                     (pattern (format "%s/%s%s.*" dir cand ,(or suffix "")))
+                     (file    (first (file-expand-wildcards pattern))))
+           (marginalia-annotate-file file)))
+       (add-to-list 'marginalia-command-categories '(,command . ,category))
+       (add-to-list 'marginalia-annotator-registry '(,category ,annotator builtin none)))))
+
 (provide 'nsmacs-macros)
 ;;; nsmacs-macros.el ends here

@@ -18,5 +18,11 @@
   (interactive)
   (switch-to-buffer (messages-buffer)))
 
+;;;###autoload
+(defun e:indent-buffer ()
+  "バッファー全体をインデントする."
+  (interactive)
+  (indent-region (point-min) (point-max)))
+
 (provide 'nsmacs-buffer-commands)
 ;;; nsmacs-buffer-commands.el ends here

@@ -1,12 +1,12 @@
-;;; nsmacs-advices.el --- アドバイス用の関数定義
+;;; nsmacs-shackle.el --- shackle 関連のコマンド
 ;;; -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
 ;;; Code:
 
-(require 'dash)
 (require 'shackle)
+(require 'dash)
 
 (defvar e:shackle-auto-close-windows nil
   "`shackle' で管理している自動で閉じるウィンドウのリスト.")
@@ -36,5 +36,5 @@ FN, ARGS はアドバイス対象の関数とその引数."
          (vterm-shell (format "tmux new -A -s emacs-%s" identifier)))
     (apply fn args)))
 
-(provide 'nsmacs-advices)
-;;; nsmacs-advices.el ends here
+(provide 'nsmacs-shackle)
+;;; nsmacs-shackle.el ends here

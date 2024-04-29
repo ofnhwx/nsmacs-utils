@@ -7,6 +7,7 @@
 
 (require 's)
 (require 'general)
+(require 'marginalia)
 
 (defmacro e:default! (variable default)
   "VARIABLE のデフォルト値を DEFAULT に設定する."
@@ -144,6 +145,14 @@ KEY, DEF の組み合わせをを一つのペアとし、BINDINGS をして任�
      :prefix-map ',(intern (format "e:%s-command-map" name))
      ,@body))
 
+(defmacro e:define-vterm-command (name &optional command)
+  "COMMAND で指定したコマンドを `vterm` で起動するコマンドを定義する.
+COMMAND が指定されていない場合は NAME をそのままコマンドとして使用する."
+  `(defun ,name ()
+     (interactive)
+     (pop-to-buffer-same-window
+      (e:vterm-exec ,(format "%s" name) ,(format "%s" (or command name))))))
+
 (defmacro e:setup-projectile-rails-annotation (type dir &optional suffix)
   "`projectile-rails-find-{TYPE}' で使用する `marginalia' の設定を用意する.
 DIR, SUFFIX はよい感じに設定してください."
@@ -155,7 +164,7 @@ DIR, SUFFIX はよい感じに設定してください."
          (when-let* ((root    (marginalia--project-root))
                      (dir     (f-expand ,dir root))
                      (pattern (format "%s/%s%s.*" dir cand ,(or suffix "")))
-                     (file    (first (file-expand-wildcards pattern))))
+                     (file    (car (file-expand-wildcards pattern))))
            (marginalia-annotate-file file)))
        (add-to-list 'marginalia-command-categories '(,command . ,category))
        (add-to-list 'marginalia-annotator-registry '(,category ,annotator builtin none)))))

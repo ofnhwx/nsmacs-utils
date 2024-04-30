@@ -25,13 +25,13 @@
   (expand-file-name "denote/20000101T000001--メモ__memo.org" org-directory))
 
 ;;;###autoload
-(defun org-support/popup-tasks ()
+(defun e:org-popup-tasks ()
   "タスク管理用のファイルをポップアップで表示."
   (interactive)
   (display-buffer (find-file-noselect (e:org-tasks-file))))
 
 ;;;###autoload
-(defun org-support/popup-note ()
+(defun e:org-popup-note ()
   "メモ用のファイルをポップアップで表示."
   (interactive)
   (display-buffer (find-file-noselect (e:org-note-file))))

@@ -12,7 +12,7 @@
 (defun e:vterm-exec (name program &rest args)
   "NAME, PROGRAM および ARGS を指定して `vterm' を起動する."
   (let ((vterm-buffer-name (format "*vterm-%s*" name))
-        (vterm-shell (format "zsh -c '%s'" (s-join " " (cons program args)))))
+        (vterm-shell (s-join " " (cons program args))))
     (vterm--internal #'ignore)))
 
 (provide 'nsmacs-vterm)

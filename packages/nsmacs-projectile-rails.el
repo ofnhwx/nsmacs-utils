@@ -14,7 +14,7 @@
                 "js" "coffee" "ts"
                 "css" "scss" "sass" "less"
                 "json" "builder" "jbuilder" "rabl"
-                "csb" "axlsx")))
+                "csb" "csvbuilder" "axlsx")))
     (setopt projectile-rails-views-re (concat "\\." (regexp-opt exts)))))
 
 ;;;###autoload

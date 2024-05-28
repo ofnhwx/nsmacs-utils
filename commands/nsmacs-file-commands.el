@@ -36,15 +36,8 @@
 (defun e:make-config ()
   "`init.org' から `init.el', `early-init.el' を生成してコンパイルする."
   (interactive)
-  (let ((default-directory user-emacs-directory)
-        (buffer (get-buffer-create "*Make*")))
-    (display-buffer buffer)
-    (set-process-sentinel
-     (start-process-shell-command "e:make-config" buffer "make init-tangle && make init-build")
-     (lambda (process event)
-       (let* ((message (s-trim-right (format "%s %s" process event)))
-              (command (format "notify-send '%s'" message)))
-         (call-process-shell-command command))))))
+  (let ((default-directory user-emacs-directory))
+    (compile "make init-tangle && make init-build")))
 
 (provide 'nsmacs-file-commands)
 ;;; nsmacs-file-commands.el ends here

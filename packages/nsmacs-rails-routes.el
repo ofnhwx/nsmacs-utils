@@ -37,7 +37,6 @@
 ;;;###autoload
 (defun ad:rails-routes-insert@override ()
   "`rails-routes-insert' のオーバーライド."
-  (interactive)
   (rails-routes--load-cache)
   (let* ((routes (rails-routes--get-routes-cached))
          (selected-value (completing-read "Route: " routes))

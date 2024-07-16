@@ -29,9 +29,16 @@
 ;;;###autoload
 (defun e:setup-marginalia-magit ()
   "`magit' 用の `marginalia' の設定を有効にする."
-  (add-to-list 'marginalia-command-categories '(magit-checkout . magit-branch))
-  (add-to-list 'marginalia-command-categories '(magit-branch-or-checkout . magit-branch))
-  (add-to-list 'marginalia-command-categories '(magit-branch-and-checkout . magit-branch))
+  (--each '(magit-checkout
+            magit-branch-or-checkout
+            magit-branch-and-checkout
+            magit-merge-plain
+            magit-merge-editmsg
+            magit-merge-nocommit
+            magit-merge-absorb
+            magit-merge-squash
+            magit-merge-into)
+    (add-to-list 'marginalia-command-categories `(,it . magit-branch)))
   (add-to-list 'marginalia-annotator-registry '(magit-branch marginalia-annotate-magit-branch builtin none)))
 
 (defun marginalia-annotate-magit-branch (cand)

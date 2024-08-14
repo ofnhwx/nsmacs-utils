@@ -37,7 +37,7 @@
   "`init.org' から `init.el', `early-init.el' を生成してコンパイルする."
   (interactive)
   (let ((default-directory user-emacs-directory))
-    (compile "make init-tangle && make init-build")))
+    (compile "make init-build")))
 
 (provide 'nsmacs-file-commands)
 ;;; nsmacs-file-commands.el ends here

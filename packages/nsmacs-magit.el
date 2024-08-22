@@ -30,25 +30,39 @@
 (defun e:setup-marginalia-magit ()
   "`magit' 用の `marginalia' の設定を有効にする."
   (--each '(magit-checkout
-            magit-branch-or-checkout
             magit-branch-and-checkout
-            magit-merge-plain
-            magit-merge-editmsg
-            magit-merge-nocommit
+            magit-branch-checkout
+            magit-branch-configure
+            magit-branch-create
+            magit-branch-delete
+            magit-branch-or-checkout
+            magit-branch-orphan
+            magit-branch-rename
+            magit-branch-reset
+            magit-branch-shelve
             magit-merge-absorb
+            magit-merge-editmsg
+            magit-merge-into
+            magit-merge-nocommit
+            magit-merge-plain
             magit-merge-squash
-            magit-merge-into)
+            magit-worktree-checkout)
     (add-to-list 'marginalia-command-categories `(,it . magit-branch)))
   (add-to-list 'marginalia-annotator-registry '(magit-branch marginalia-annotate-magit-branch builtin none)))
 
 (defun marginalia-annotate-magit-branch (cand)
   "`magit-branch' 用の `marginalia' の設定.
 CAND の詳細は `marginalia を参照."
-  (let* ((command (format "git log -1 --pretty=format:%%s%%ad --date=short %s" cand))
-         (log (s-split "" (kllib:shell-command-to-string command))))
+  (pcase-let* (;;
+               (command1 (format "git log -1 --pretty='format:%%cd%%s' --date=human %s" cand))
+               (`(,committer-date ,subject) (s-split "" (kllib:shell-command-to-string command1)))
+               ;;
+               (command2 (format "git config --get 'branch.%s.description'" cand))
+               (description (kllib:shell-command-to-string command2)))
     (marginalia--fields
-     ((nth 0 log) :face 'marginalia-documentation)
-     ((nth 1 log) :face 'marginalia-date))))
+     (committer-date :face 'marginalia-date)
+     (description    :face 'marginalia-documentation)
+     (subject        :face 'marginalia-lighter))))
 
 (provide 'nsmacs-magit)
 ;;; nsmacs-magit.el ends here

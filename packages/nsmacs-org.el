@@ -17,12 +17,12 @@
 (defun e:org-tasks-file ()
   "タスク管理用のファイルのパスを返す."
   (require 'org)
-  (expand-file-name "denote/20000101T000000--タスク__task.org" org-directory))
+  (expand-file-name "denote/TASK.org" org-directory))
 
 ;;;###autoload
 (defun e:org-note-file ()
   "メモ用ファイルのパスを返す."
-  (expand-file-name "denote/20000101T000001--メモ__memo.org" org-directory))
+  (expand-file-name "denote/NOTE.org" org-directory))
 
 ;;;###autoload
 (defun e:org-popup-tasks ()

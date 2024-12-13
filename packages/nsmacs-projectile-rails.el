@@ -18,6 +18,15 @@
     (setopt projectile-rails-views-re (concat "\\." (regexp-opt exts)))))
 
 ;;;###autoload
+(defun e:projectile-rails-find-form ()
+  "Find a form."
+  (interactive)
+  (projectile-rails-find-resource
+   "form: "
+   `(("app/forms/" "\\(.+\\)\\.rb$"))
+   "app/forms/${filename"))
+
+;;;###autoload
 (defun e:projectile-rails-find-view-components ()
   "Find a View component."
   (interactive)

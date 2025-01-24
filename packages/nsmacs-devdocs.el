@@ -10,7 +10,7 @@
 ;;;###autoload
 (defun e:devdocs-ruby ()
   "Ruby 用の `devdocs' を設定."
-  (setq-local devdocs-current-docs '("rails~7.1" "ruby~3")))
+  (setq-local devdocs-current-docs '("rails~8.0" "ruby~3")))
 
 (provide 'nsmacs-devdocs)
 ;;; nsmacs-devdocs.el ends here

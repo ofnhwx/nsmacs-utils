@@ -46,6 +46,7 @@
             magit-merge-nocommit
             magit-merge-plain
             magit-merge-squash
+            magit-reset-quickly
             magit-worktree-checkout)
     (add-to-list 'marginalia-command-categories `(,it . magit-branch)))
   (add-to-list 'marginalia-annotator-registry '(magit-branch marginalia-annotate-magit-branch builtin none)))

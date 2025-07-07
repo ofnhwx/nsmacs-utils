@@ -54,35 +54,41 @@ FN, ARGS はアドバイス対象の関数とその引数."
   (and-let* ((notifications (e:consult-dunst--parse-history))
              (candidates (mapcar (lambda (notification)
                                    (cons (e:consult-dunst--format-notification notification) notification))
-                                 notifications))
+                                 (sort notifications (lambda (a b) (> (plist-get a :id) (plist-get b :id))))))
              (selected-string (consult--read candidates :prompt "Dunst History: " :category 'dunst-notification :require-match t :sort nil))
              (selected-notification (cdr (assoc selected-string candidates))))
     (e:consult-dunst--history-pop selected-notification)))
 
 (defun e:consult-dunst--parse-history ()
   "通知の履歴を `dunstctl history' から plist 形式で取得する."
-  (when-let* ((command "dunstctl history | jq -r '.data[0][] | [.id.data, .appname.data, .summary.data, (.body.data | gsub(\"\\n\"; \" \"))] | @tsv'")
+  (when-let* ((boot-time (time-convert (date-to-time (kllib:shell-command-to-string "uptime -s")) 'integer))
+              (command "dunstctl history | jq -r '.data[0][] | [.id.data, .appname.data, .summary.data, (.body.data | gsub(\"\\n\"; \" \")), .timestamp.data] | @tsv'")
               (jq-output (shell-command-to-string command))
               ((not (string-empty-p jq-output))))
     (mapcar (lambda (line)
               (when-let* ((fields (split-string line "\t"))
-                          ((>= (length fields) 4)))
+                          ((>= (length fields) 5)))
                 (list :id (string-to-number (nth 0 fields))
                       :appname (nth 1 fields)
                       :summary (nth 2 fields)
-                      :body (nth 3 fields))))
+                      :body (nth 3 fields)
+                      :timestamp (+ (/ (string-to-number (nth 4 fields)) 1000000) boot-time))))
             (split-string jq-output "\n" t))))
 
 (defun e:consult-dunst--format-notification (notification)
   "通知を consult 用の文字列にフォーマットする.
-NOTIFICATION は :id, :summary, :appname を含む plist."
-  (let ((appname (plist-get notification :appname))
+NOTIFICATION は :id, :summary, :appname, :timestamp を含む plist."
+  (let ((id (plist-get notification :id))
+        (appname (plist-get notification :appname))
         (summary (plist-get notification :summary))
-        (body (plist-get notification :body)))
-    (format "%-15s %s %s"
+        (body (plist-get notification :body))
+        (timestamp (plist-get notification :timestamp)))
+    (format "%s %s %-15s %s %s"
+            (propertize (format "%3d" id) 'face 'font-lock-constant-face)
+            (propertize (format-time-string "%m/%d %H:%M" timestamp) 'face 'font-lock-type-face)
             (if (> (length appname) 15) (substring appname 0 15) appname)
             summary
-            body)))
+            (propertize body 'face 'font-lock-comment-face))))
 
 (defun e:consult-dunst--history-pop (notification)
   "選択した通知を再表示する.

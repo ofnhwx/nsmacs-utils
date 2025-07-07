@@ -55,31 +55,34 @@ FN, ARGS はアドバイス対象の関数とその引数."
              (candidates (mapcar (lambda (notification)
                                    (cons (e:consult-dunst--format-notification notification) notification))
                                  notifications))
-             (selected-string (consult--read candidates :prompt "Dunst History: " :category 'dunst-notification :require-match t))
+             (selected-string (consult--read candidates :prompt "Dunst History: " :category 'dunst-notification :require-match t :sort nil))
              (selected-notification (cdr (assoc selected-string candidates))))
     (e:consult-dunst--history-pop selected-notification)))
 
 (defun e:consult-dunst--parse-history ()
   "通知の履歴を `dunstctl history' から plist 形式で取得する."
-  (when-let* ((command "dunstctl history | jq -r '.data[0][] | [.id.data, .summary.data, .appname.data] | @tsv'")
+  (when-let* ((command "dunstctl history | jq -r '.data[0][] | [.id.data, .appname.data, .summary.data, (.body.data | gsub(\"\\n\"; \" \"))] | @tsv'")
               (jq-output (shell-command-to-string command))
               ((not (string-empty-p jq-output))))
     (mapcar (lambda (line)
               (when-let* ((fields (split-string line "\t"))
-                          ((= (length fields) 3)))
+                          ((>= (length fields) 4)))
                 (list :id (string-to-number (nth 0 fields))
-                      :summary (nth 1 fields)
-                      :appname (nth 2 fields))))
+                      :appname (nth 1 fields)
+                      :summary (nth 2 fields)
+                      :body (nth 3 fields))))
             (split-string jq-output "\n" t))))
 
 (defun e:consult-dunst--format-notification (notification)
   "通知を consult 用の文字列にフォーマットする.
 NOTIFICATION は :id, :summary, :appname を含む plist."
-  (let ((summary (plist-get notification :summary))
-        (appname (plist-get notification :appname)))
-    (format "%-15s %s"
+  (let ((appname (plist-get notification :appname))
+        (summary (plist-get notification :summary))
+        (body (plist-get notification :body)))
+    (format "%-15s %s %s"
             (if (> (length appname) 15) (substring appname 0 15) appname)
-            summary)))
+            summary
+            body)))
 
 (defun e:consult-dunst--history-pop (notification)
   "選択した通知を再表示する.

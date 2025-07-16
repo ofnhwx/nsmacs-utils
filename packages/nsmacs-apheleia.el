@@ -11,7 +11,7 @@
 
 ;;;###autoload
 (defun e:apheleia-inhibit-unnecesary-major-mode ()
-  "特定のメジャーモード以外では `apheleia' を実行しない"
+  "特定のメジャーモード以外では `apheleia' を実行しない."
   (--none? (derived-mode-p it)
            '(
              ruby-base-mode

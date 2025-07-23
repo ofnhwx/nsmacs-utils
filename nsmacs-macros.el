@@ -20,8 +20,6 @@
 (defmacro e:var! (variable value)
   "VARIABLE で指定したファイルを `no-littering' で管理する.
 ファイル名は VALUE に設定する."
-  `(setq ,variable (no-littering-expand-var-file-name ,value))
-  "Set VARIABLE to VALUE."
   `(setopt ,variable (no-littering-expand-var-file-name ,value)))
 
 (defmacro e:if! (condition &rest body)

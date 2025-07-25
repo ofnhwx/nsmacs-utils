@@ -58,6 +58,7 @@
 ;;;###autoload
 (defun e:process-high-priority-config-queue ()
   "高優先度の設定を実行する."
+  (defconst e:high-priority-config-queue-start-time (current-time))
   (setq e:high-priority-config-queue-timer
         (run-with-timer
          0.1 0.001
@@ -65,11 +66,13 @@
            (if e:high-priority-config-queue
                (let ((inhibit-message t))
                  (funcall (pop e:high-priority-config-queue)))
-             (cancel-timer e:high-priority-config-queue-timer))))))
+             (cancel-timer e:high-priority-config-queue-timer)
+             (defconst e:high-priority-config-queue-end-time (current-time)))))))
 
 ;;;###autoload
 (defun e:process-low-priority-config-queue ()
   "低優先度の設定を実行する."
+  (defconst e:low-priority-config-queue-start-time (current-time))
   (setq e:low-priority-config-queue-timer
         (run-with-timer
          0.5 0.005
@@ -77,7 +80,8 @@
            (if e:low-priority-config-queue
                (let ((inhibit-message t))
                  (funcall (pop e:low-priority-config-queue)))
-             (cancel-timer e:low-priority-config-queue-timer))))))
+             (cancel-timer e:low-priority-config-queue-timer)
+             (defconst e:low-priority-config-queue-end-time (current-time)))))))
 
 (defmacro e:major-mode-key-def (modes key def &rest bindings)
   "MODES で指定したメジャーモード用のキーバイドを設定する.

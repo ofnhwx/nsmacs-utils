@@ -45,5 +45,14 @@
    '(("app/graphql/" "\\(.+\\)\\.rb$"))
    "app/graphql/${filename}"))
 
+;;;###autoload
+(defun e:projectile-rails-find-route ()
+  "Find a route."
+  (interactive)
+  (projectile-rails-find-resource
+   "routes: "
+   '(("config/" "\\(routes\\)\\.rb$")
+     ("config/" "\\(routes/.+\\)\\.rb$"))))
+
 (provide 'nsmacs-projectile-rails)
 ;;; nsmacs-projectile-rails.el ends here

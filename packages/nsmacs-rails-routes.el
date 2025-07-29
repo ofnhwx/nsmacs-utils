@@ -11,7 +11,7 @@
 
 ;;;###autoload
 (defun e:rails-routes--generate-command-result ()
-  "Rails のルーティングを `--expand' オプションを使用して取得する."
+  "Rails のルーティングを `--expanded' オプションを使用して取得する."
   (->> (kllib:shell-command-to-list "bundle exec rails routes --expanded")
        (--filter (or (s-starts-with? "--\[ Route " it)
                      (s-starts-with? "Prefix            | " it)

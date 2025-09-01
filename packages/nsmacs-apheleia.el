@@ -14,6 +14,7 @@
   "特定のメジャーモード以外では `apheleia' を実行しない."
   (--none? (derived-mode-p it)
            '(
+             haml-mode
              ruby-base-mode
              )))
 

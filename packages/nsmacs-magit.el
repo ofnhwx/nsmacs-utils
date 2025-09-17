@@ -54,10 +54,13 @@
 (defun marginalia-annotate-magit-branch (cand)
   "`magit-branch' 用の `marginalia' の設定.
 CAND の詳細は `marginalia を参照."
-  (pcase-let* (;;
-               (command1 (format "git log -1 --pretty='format:%%cd%%s' --date=human %s" cand))
+  (pcase-let* (;; 直近のコミットの日時とサマリを取得
+               (ref (if (zerop (call-process "git" nil nil nil "show-ref" "--verify" "--quiet" (format "refs/heads/%s" cand)))
+                        (format "refs/heads/%s" cand)
+                      cand))
+               (command1 (format "git log -1 --pretty='format:%%cd%%s' --date=human %s" ref))
                (`(,committer-date ,subject) (s-split "" (kllib:shell-command-to-string command1)))
-               ;;
+               ;; ブランチの説明を取得
                (command2 (format "git config --get 'branch.%s.description'" cand))
                (description (kllib:shell-command-to-string command2)))
     (marginalia--fields

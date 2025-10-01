@@ -7,6 +7,7 @@
 
 (require 's)
 (require 'general)
+(require 'bind-map)
 (require 'marginalia)
 
 (defmacro e:default! (variable default)
@@ -32,74 +33,6 @@
   "BODY を評価する(コンパイル時の警告回避用)."
   (declare (indent defun))
   `(eval '(progn ,@body)))
-
-(defvar e:high-priority-config-queue nil
-  "起動時に優先度高めで実行する設定.")
-(defvar e:low-priority-config-queue nil
-  "起動時に優先度低めで実行する設定.")
-(defvar e:high-priority-config-queue-timer nil
-  "起動時に優先度高めで実行する設定の制御用タイマー.")
-(defvar e:low-priority-config-queue-timer nil
-  "起動時に優先度低めで実行する設定の制御用タイマー.")
-(defvar e:deferred-config-loaded nil
-  "起動時の設定を実行したかを保存しておく.")
-
-(defmacro e:deferred-config! (package &rest body)
-  "PACKAGE の設定(BODY)を遅延評価する."
-  (declare (indent defun))
-  (let* ((priority (or (plist-get body :priority) :low))
-         (queue (if (eq priority :high) 'e:high-priority-config-queue 'e:low-priority-config-queue))
-         (fn-name (intern (format "e:package-config-%s!" package))))
-    `(let ((fn (defun ,fn-name () (leaf ,package ,@body))))
-       (if e:deferred-config-loaded
-           (funcall fn)
-         (setq ,queue (append ,queue (list fn)))))))
-
-;;;###autoload
-(defun e:process-high-priority-config-queue ()
-  "高優先度の設定を実行する."
-  (message "[%f] High priority config queue started." (e:emacs-uptime))
-  (defconst e:high-priority-config-queue-start-time (current-time))
-  (setq e:high-priority-config-queue-timer
-        (run-with-timer
-         0.1 0.001
-         (lambda ()
-           (if e:high-priority-config-queue
-               (let ((inhibit-message t)
-                     (func (pop e:high-priority-config-queue))
-                     (time (current-time)))
-                 (funcall func)
-                 (let ((elapsed (float-time (time-subtract (current-time) time))))
-                   (if (or (> elapsed 0.01) init-file-debug)
-                       (message "[%f] High priority config: %s (%f)" (e:emacs-uptime) func elapsed))))
-             (cancel-timer e:high-priority-config-queue-timer)
-             (message "[%f] High priority config queue finished." (e:emacs-uptime))
-             (defconst e:high-priority-config-queue-end-time (current-time)))))))
-
-;;;###autoload
-(defun e:process-low-priority-config-queue ()
-  "低優先度の設定を実行する."
-  (message "[%f] Low priority config queue started." (e:emacs-uptime))
-  (defconst e:low-priority-config-queue-start-time (current-time))
-  (setq e:low-priority-config-queue-timer
-        (run-with-timer
-         0.5 0.005
-         (lambda ()
-           (if e:low-priority-config-queue
-               (let ((inhibit-message t)
-                     (func (pop e:low-priority-config-queue))
-                     (time (current-time)))
-                 (funcall func)
-                 (let ((elapsed (float-time (time-subtract (current-time) time))))
-                   (if (or (> elapsed 0.01) init-file-debug)
-                       (message "[%f] Low priority config: %s (%f)" (e:emacs-uptime) func elapsed))))
-             (cancel-timer e:low-priority-config-queue-timer)
-             (message "[%f] Low priority config queue finished." (e:emacs-uptime))
-             (defconst e:low-priority-config-queue-end-time (current-time)))))))
-
-(defun e:emacs-uptime ()
-  "Emacs の起動からの時間を取得する."
-  (float-time (time-since before-init-time)))
 
 (defmacro e:major-mode-key-def (modes key def &rest bindings)
   "MODES で指定したメジャーモード用のキーバイドを設定する.

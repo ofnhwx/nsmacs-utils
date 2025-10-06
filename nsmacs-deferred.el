@@ -28,7 +28,7 @@
   (make-e:deferred-queue
    :name "Low priority"
    :items nil
-   :initial-delay 0.1)
+   :initial-delay 0.05)
   "低優先度の遅延設定キュー.")
 
 (defvar e:deferred-config-loaded nil

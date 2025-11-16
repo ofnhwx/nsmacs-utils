@@ -69,7 +69,7 @@ KEY, DEF の組み合わせをを一つのペアとし、BINDINGS をして任�
          ,mode-key ,modes
          :keys ("M-<return>" "M-m m")
          :evil-keys ("," "SPC m")
-         :evil-states (motion normal visual))
+         :evil-states '(motion normal visual))
        (general-def ,map ,@general-bindings)
        ,(when prefix-bindings
           `(which-key-add-keymap-based-replacements ,map
@@ -120,7 +120,7 @@ DIR, SUFFIX はよい感じに設定してください."
                      (file    (car (file-expand-wildcards pattern))))
            (marginalia-annotate-file file)))
        (add-to-list 'marginalia-command-categories '(,command . ,category))
-       (add-to-list 'marginalia-annotator-registry '(,category ,annotator builtin none)))))
+       (add-to-list 'marginalia-annotators '(,category ,annotator builtin none)))))
 
 (provide 'nsmacs-macros)
 ;;; nsmacs-macros.el ends here

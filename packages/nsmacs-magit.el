@@ -49,7 +49,7 @@
             magit-reset-quickly
             magit-worktree-checkout)
     (add-to-list 'marginalia-command-categories `(,it . magit-branch)))
-  (add-to-list 'marginalia-annotator-registry '(magit-branch marginalia-annotate-magit-branch builtin none)))
+  (add-to-list 'marginalia-annotators '(magit-branch marginalia-annotate-magit-branch builtin none)))
 
 (defun marginalia-annotate-magit-branch (cand)
   "`magit-branch' 用の `marginalia' の設定.

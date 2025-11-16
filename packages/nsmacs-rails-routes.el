@@ -54,7 +54,7 @@
   "`rails-routes' 用の `marginalia' の設定を有効にする."
   (add-to-list 'marginalia-command-categories '(rails-routes-insert . rails-routes))
   (add-to-list 'marginalia-command-categories '(rails-routes-insert-no-cache . rails-routes))
-  (add-to-list 'marginalia-annotator-registry '(rails-routes marginalia-annotate-rails-routes builtin none)))
+  (add-to-list 'marginalia-annotators '(rails-routes marginalia-annotate-rails-routes builtin none)))
 
 (defun marginalia-annotate-rails-routes (cand)
   "`rails-routes' 用の `marginalia' の設定.

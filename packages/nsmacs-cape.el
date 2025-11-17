@@ -10,7 +10,8 @@
 (require 'cape)
 (require 'codeium)
 (require 'company-org-block)
-(require 'lsp-completion)
+
+(declare-function lsp-completion-at-point "lsp-completion")
 
 ;;;###autoload
 (defalias 'cape-codeium (cape-capf-interactive #'codeium-completion-at-point))

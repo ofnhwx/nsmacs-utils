@@ -13,11 +13,6 @@
 (defun ad:start-process@with-vterm (name buffer program &rest args)
   "`prodigy' のプロセスを `vterm' で起動するためのアドバイス.
 NAME, BUFFER, PROGRAM, ARGS は `start-process' と同じ."
-  (let* ((cwd (plist-get (prodigy-find-service name) :cwd))
-         (sock-file (f-expand ".overmind.sock" cwd)))
-    (when (f-exists? sock-file)
-      (message "delete: %s" sock-file)
-      (delete-file sock-file)))
   (save-window-excursion
     (with-current-buffer (apply #'e:vterm-exec name program args)
       vterm--process)))
@@ -48,6 +43,34 @@ FN, ARGS はアドバイス対象の関数とその引数."
         :tags '(general)
         :stop-signal 'int))
     (prodigy-start-service (prodigy-find-service service))))
+
+;;;###autoload
+(defun e:prodigy-define-rails-service (project-dir)
+  "Rails プロジェクトを Prodigy のサービスとして定義する.
+PROJECT-DIR はプロジェクトのルートディレクトリのパス."
+  (unless (f-exists? project-dir)
+    (error "対象のディレクトリが見つかりません: %s" project-dir))
+  (let ((procfile (e:find-procfile project-dir))
+        (service  (f-filename      project-dir)))
+    (prodigy-define-service
+      :name (format "rails/%s" service)
+      :command "omind"
+      :args (list "start" "--procfile" procfile)
+      :cwd project-dir
+      :tags '(rails)
+      :url (format "https://%s.test" service)
+      :stop-signal 'int)))
+
+(defun e:find-procfile (project-dir)
+  "PROJECT-DIR にある Procfile を探す."
+  (let ((procfile (->> '("Procfile.dev" "Procfile.local" "Procfile")
+                       (--map (f-expand it project-dir))
+                       (-filter #'f-exists?)
+                       (-map #'f-filename)
+                       (-first-item))))
+    (unless procfile
+      (error "Procfile が見つかりません: %s" project-dir))
+    procfile))
 
 (provide 'nsmacs-prodigy)
 ;;; nsmacs-prodigy.el ends here

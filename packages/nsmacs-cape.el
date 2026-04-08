@@ -8,13 +8,9 @@
 (require 'nsmacs-macros)
 (require 'dash)
 (require 'cape)
-(require 'codeium)
 (require 'company-org-block)
 
 (declare-function lsp-completion-at-point "lsp-completion")
-
-;;;###autoload
-(defalias 'cape-codeium (cape-capf-interactive #'codeium-completion-at-point))
 
 ;;;###autoload
 (defalias 'cape-org-block (cape-capf-interactive (cape-company-to-capf #'company-org-block)))
@@ -23,7 +19,7 @@
   "補完の設定を行う関数を定義して返す.
 NAME は定義する関数の識別に使用し、CAPFS はこの関数でメインに使う補完用の関数を指定する."
   (let ((fun (intern (format "e:cape-%s" name)))
-        (capfs (-concat capfs '(cape-dabbrev codeium-completion-at-point))))
+        (capfs (-concat capfs '(cape-dabbrev))))
     (defalias fun
       (cape-capf-interactive
        (cape-capf-buster

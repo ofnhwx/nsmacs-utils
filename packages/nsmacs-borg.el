@@ -5,6 +5,7 @@
 
 ;;; Code:
 
+(require 'epkg)
 (require 'borg)
 (require 'f)
 

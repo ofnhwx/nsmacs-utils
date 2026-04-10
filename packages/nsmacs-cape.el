@@ -8,12 +8,9 @@
 (require 'nsmacs-macros)
 (require 'dash)
 (require 'cape)
-(require 'company-org-block)
 
 (declare-function lsp-completion-at-point "lsp-completion")
-
-;;;###autoload
-(defalias 'cape-org-block (cape-capf-interactive (cape-company-to-capf #'company-org-block)))
+(declare-function corg-completion-at-point "corg")
 
 (defun e:capf-function (name &rest capfs)
   "補完の設定を行う関数を定義して返す.
@@ -38,7 +35,7 @@ NAME は定義する関数の識別に使用し、CAPFS はこの関数でメイ
   "`org-mode' 用の補完を設定する."
   (interactive)
   (e:local! completion-at-point-functions
-            (e:capf-function "org" #'cape-elisp-block #'cape-org-block)))
+            (e:capf-function "org" #'cape-elisp-block #'corg-completion-at-point)))
 
 ;;;###autoload
 (defun e:setup-capf/lsp ()

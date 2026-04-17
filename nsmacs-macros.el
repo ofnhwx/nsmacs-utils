@@ -4,6 +4,7 @@
 
 ;;; Code:
 
+(require 'cl-lib)
 (require 's)
 (require 'general)
 (require 'bind-map)
@@ -105,19 +106,20 @@ COMMAND が指定されていない場合は NAME をそのままコマンドと
      (pop-to-buffer-same-window
       (e:vterm-exec ,(format "%s" name) ,(format "%s" (or command name))))))
 
-(defmacro e:setup-projectile-rails-annotation (type dir &optional suffix)
-  "`projectile-rails-find-{TYPE}' で使用する `marginalia' の設定を用意する.
-DIR, SUFFIX はよい感じに設定してください."
-  (let ((command   (intern (format "projectile-rails-find-%s" type)))
+(defmacro e:setup-project-rails-annotation (type dir &optional suffix command)
+  "`project-rails-find-{TYPE}' で使用する `marginalia' の設定を用意する.
+DIR は文字列または文字列のリスト、SUFFIX はよい感じに設定してください.
+COMMAND を指定した場合は `project-rails-find-{TYPE}' の代わりにそのコマンドを対象とする."
+  (let ((command   (or command (intern (format "project-rails-find-%s" type))))
         (category  (intern (format "rails-%s-file" type)))
         (annotator (intern (format "marginalia-annotate-rails-%s-file" type))))
     `(progn
        (defun ,annotator (cand)
-         (when-let* ((root    (marginalia--project-root))
-                     (dir     (f-expand ,dir root))
-                     (pattern (format "%s/%s%s.*" dir cand ,(or suffix "")))
-                     (file    (car (file-expand-wildcards pattern))))
-           (marginalia-annotate-file file)))
+         (when-let* ((root (marginalia--project-root)))
+           (cl-loop for d in (if (listp ,dir) ,dir (list ,dir))
+                    for pattern = (format "%s/%s%s*" (f-expand d root) cand ,(or suffix ""))
+                    for file = (car (file-expand-wildcards pattern))
+                    when file return (marginalia-annotate-file file))))
        (add-to-list 'marginalia-command-categories '(,command . ,category))
        (add-to-list 'marginalia-annotators '(,category ,annotator builtin none)))))
 

@@ -1,5 +1,4 @@
-;;; nsmacs-scratch.el --- scratch 関連のコマンド
-;;; -*- lexical-binding: t; -*-
+;;; nsmacs-scratch.el --- scratch 関連のコマンド -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 

@@ -1,5 +1,4 @@
-;;; nsmacs-prodigy.el --- prodigy 関連のコマンド
-;;; -*- lexical-binding: t; -*-
+;;; nsmacs-prodigy.el --- prodigy 関連のコマンド -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
@@ -10,9 +9,9 @@
 (require 'skk)
 
 ;;;###autoload
-(defun ad:start-process@with-vterm (name buffer program &rest args)
+(defun ad:start-process@with-vterm (name _buffer program &rest args)
   "`prodigy' のプロセスを `vterm' で起動するためのアドバイス.
-NAME, BUFFER, PROGRAM, ARGS は `start-process' と同じ."
+NAME, PROGRAM, ARGS は `start-process' と同じ."
   (save-window-excursion
     (with-current-buffer (apply #'e:vterm-exec name program args)
       vterm--process)))

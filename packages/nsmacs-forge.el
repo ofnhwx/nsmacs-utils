@@ -1,11 +1,11 @@
-;;; nsmacs-forge.el --- forge 関連のカスタマイズ
-;;; -*- lexical-binding: t; -*-
+;;; nsmacs-forge.el --- forge 関連のカスタマイズ -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
 ;;; Code:
 
-(declare-function forge-get-repository "forge-repo")
+(require 'eieio)
+(require 'forge-repo)
 
 (defun e:forge--expand-author-clause (clause)
   "CLAUSE が `(= topic:author \"a,b,...\")' のときに OR 句へ展開する."
@@ -20,7 +20,7 @@
 
 ;;;###autoload
 (defun ad:forge--list-topics-2@multi-author (query)
-  "`forge--list-topics-2' の返す QUERY について、カンマ区切りの author 指定を OR 句に展開する.
+  "QUERY 内のカンマ区切り author 指定を OR 句に展開する.
 想定外の構造や例外が起きた場合は、元の QUERY をそのまま返し `message' で通知する."
   (condition-case err
       (if-let* (((vectorp query))

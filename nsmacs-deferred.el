@@ -1,5 +1,4 @@
-;;; nsmacs-deferred.el --- 遅延設定ロード機構
-;;; -*- lexical-binding: t; -*-
+;;; nsmacs-deferred.el --- 遅延設定ロード機構 -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;; パッケージ設定を優先度付きで遅延ロードする仕組みを提供します。

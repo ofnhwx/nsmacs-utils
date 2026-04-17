@@ -1,5 +1,4 @@
-;;; nsmacs-file-commands.el --- ファイル関連のコマンド
-;;; -*- lexical-binding: t; -*-
+;;; nsmacs-file-commands.el --- ファイル関連のコマンド -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 

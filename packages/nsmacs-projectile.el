@@ -1,5 +1,4 @@
-;;; nsmacs-projectile.el --- projectile 関連のコマンド
-;;; -*- lexical-binding: t; -*-
+;;; nsmacs-projectile.el --- projectile 関連のコマンド -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 

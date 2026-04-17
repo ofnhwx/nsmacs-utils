@@ -1,5 +1,4 @@
-;;; nsmacs-consult.el --- consult 関連のコマンド
-;;; -*- lexical-binding: t; -*-
+;;; nsmacs-consult.el --- consult 関連のコマンド -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 

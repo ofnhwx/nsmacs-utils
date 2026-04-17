@@ -1,5 +1,4 @@
-;;; nsmacs-projectile-rails.el --- projectile-rails 関連のコマンド
-;;; -*- lexical-binding: t; -*-
+;;; nsmacs-projectile-rails.el --- projectile-rails 関連のコマンド -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
@@ -24,7 +23,7 @@
   (projectile-rails-find-resource
    "decorator: "
    `(("app/decorators/" "\\(.+\\)\\.rb$"))
-   "app/decorators/${filename"))
+   "app/decorators/${filename}"))
 
 ;;;###autoload
 (defun e:projectile-rails-find-form ()
@@ -33,7 +32,7 @@
   (projectile-rails-find-resource
    "form: "
    `(("app/forms/" "\\(.+\\)\\.rb$"))
-   "app/forms/${filename"))
+   "app/forms/${filename}"))
 
 ;;;###autoload
 (defun e:projectile-rails-find-view-components ()
@@ -58,10 +57,11 @@
 (defun e:projectile-rails-find-route ()
   "Find a route."
   (interactive)
-  (projectile-rails-find-resource
-   "routes: "
-   '(("config/" "\\(routes\\)\\.rb$")
-     ("config/" "\\(routes/.+\\)\\.rb$"))))
+  (with-suppressed-warnings ((lexical filename))
+    (projectile-rails-find-resource
+     "routes: "
+     '(("config/" "\\(routes\\)\\.rb$")
+       ("config/" "\\(routes/.+\\)\\.rb$")))))
 
 (provide 'nsmacs-projectile-rails)
 ;;; nsmacs-projectile-rails.el ends here

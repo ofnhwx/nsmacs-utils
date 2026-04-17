@@ -1,5 +1,4 @@
-;;; nsmacs-misc-commands.el --- ちょっと便利なコマンド
-;;; -*- lexical-binding: t; -*-
+;;; nsmacs-misc-commands.el --- ちょっと便利なコマンド -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 

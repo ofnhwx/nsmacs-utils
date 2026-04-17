@@ -1,11 +1,12 @@
-;;; nsmacs-shackle.el --- shackle 関連のコマンド
-;;; -*- lexical-binding: t; -*-
+;;; nsmacs-shackle.el --- shackle 関連のコマンド -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
 ;;; Code:
 
 (require 'shackle)
+(require 'shell-pop)
+(require 'vterm)
 (require 'dash)
 
 (defvar e:shackle-auto-close-windows nil

@@ -1,5 +1,4 @@
-;;; nsmacs-evil.el --- evil 関連のコマンド
-;;; -*- lexical-binding: t; -*-
+;;; nsmacs-evil.el --- evil 関連のコマンド -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 

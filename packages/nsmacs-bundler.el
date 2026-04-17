@@ -1,5 +1,4 @@
-;;; nsmacs-bundler.el --- bundler 関連のコマンド
-;;; -*- lexical-binding: t; -*-
+;;; nsmacs-bundler.el --- bundler 関連のコマンド -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 

@@ -1,5 +1,4 @@
-;;; nsmacs-magit.el --- magit 関連のコマンド
-;;; -*- lexical-binding: t; -*-
+;;; nsmacs-magit.el --- magit 関連のコマンド -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 

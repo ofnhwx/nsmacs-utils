@@ -1,5 +1,4 @@
-;;; nsmacs-borg.el --- borg 関連のコマンド
-;;; -*- lexical-binding: t; -*-
+;;; nsmacs-borg.el --- borg 関連のコマンド -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 

@@ -1,5 +1,4 @@
-;;; nsmacs-orderless.el --- orderless 関連のコマンド
-;;; -*- lexical-binding: t; -*-
+;;; nsmacs-orderless.el --- orderless 関連のコマンド -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 

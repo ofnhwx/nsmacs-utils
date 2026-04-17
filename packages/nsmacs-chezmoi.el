@@ -1,5 +1,4 @@
-;;; nsmacs-chezmoi.el --- chezmoi 関連のコマンド
-;;; -*- lexical-binding: t; -*-
+;;; nsmacs-chezmoi.el --- chezmoi 関連のコマンド -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 

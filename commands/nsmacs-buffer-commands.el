@@ -1,5 +1,4 @@
-;;; nsmacs-buffer-commands.el --- バッファー関連のコマンド
-;;; -*- lexical-binding: t; -*-
+;;; nsmacs-buffer-commands.el --- バッファー関連のコマンド -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 

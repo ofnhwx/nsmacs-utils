@@ -1,5 +1,4 @@
-;;; nsmacs-cape.el --- cape 関連のコマンド
-;;; -*- lexical-binding: t; -*-
+;;; nsmacs-cape.el --- cape 関連のコマンド -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 

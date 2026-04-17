@@ -1,5 +1,4 @@
-;;; nsmacs-flycheck.el --- flycheck 関連のコマンド
-;;; -*- lexical-binding: t; -*-
+;;; nsmacs-flycheck.el --- flycheck 関連のコマンド -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 

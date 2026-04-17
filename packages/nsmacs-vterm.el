@@ -1,5 +1,4 @@
-;;; nsmacs-vterm.el --- vterm 関連のコマンド
-;;; -*- lexical-binding: t; -*-
+;;; nsmacs-vterm.el --- vterm 関連のコマンド -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 

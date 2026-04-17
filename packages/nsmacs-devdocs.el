@@ -1,5 +1,4 @@
-;;; nsmacs-devdocs.el --- devdocs 関連のコマンド
-;;; -*- lexical-binding: t; -*-
+;;; nsmacs-devdocs.el --- devdocs 関連のコマンド -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 

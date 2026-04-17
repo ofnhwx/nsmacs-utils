@@ -1,5 +1,4 @@
-;;; nsmacs-haml-mode.el --- haml-mode 関連のコマンド
-;;; -*- lexical-binding: t; -*-
+;;; nsmacs-haml-mode.el --- haml-mode 関連のコマンド -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 

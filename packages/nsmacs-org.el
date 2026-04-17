@@ -1,5 +1,4 @@
-;;; nsmacs-org.el --- org 関連のコマンド
-;;; -*- lexical-binding: t; -*-
+;;; nsmacs-org.el --- org 関連のコマンド -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 

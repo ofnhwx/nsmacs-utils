@@ -1,5 +1,4 @@
-;;; nsmacs-lsp-mode.el --- lsp-mode 関連のコマンド
-;;; -*- lexical-binding: t; -*-
+;;; nsmacs-lsp-mode.el --- lsp-mode 関連のコマンド -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 

@@ -1,5 +1,4 @@
-;;; nsmacs-macros.el --- マクロ集
-;;; -*- lexical-binding: t; -*-
+;;; nsmacs-macros.el --- マクロ集 -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 

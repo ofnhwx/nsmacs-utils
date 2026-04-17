@@ -1,5 +1,4 @@
-;;; nsmacs-rails-routes.el --- rails-routes 関連のコマンド
-;;; -*- lexical-binding: t; -*-
+;;; nsmacs-rails-routes.el --- rails-routes 関連のコマンド -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 

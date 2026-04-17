@@ -1,5 +1,4 @@
-;;; nsmacs-magit-delta.el --- magit-delta 関連のコマンド
-;;; -*- lexical-binding: t; -*-
+;;; nsmacs-magit-delta.el --- magit-delta 関連のコマンド -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 

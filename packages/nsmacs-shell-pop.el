@@ -1,5 +1,4 @@
-;;; nsmacs-shell-pop.el --- shell-pop 関連のコマンド
-;;; -*- lexical-binding: t; -*-
+;;; nsmacs-shell-pop.el --- shell-pop 関連のコマンド -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 

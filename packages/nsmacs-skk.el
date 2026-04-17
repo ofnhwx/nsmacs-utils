@@ -1,5 +1,4 @@
-;;; nsmacs-skk.el --- skk 関連のコマンド
-;;; -*- lexical-binding: t; -*-
+;;; nsmacs-skk.el --- skk 関連のコマンド -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 

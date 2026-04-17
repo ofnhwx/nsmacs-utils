@@ -1,5 +1,4 @@
-;;; nsmacs-layout-commands.el --- レイアウト関連のコマンド
-;;; -*- lexical-binding: t; -*-
+;;; nsmacs-layout-commands.el --- レイアウト関連のコマンド -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 

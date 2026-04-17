@@ -1,11 +1,12 @@
-;;; nsmacs-corfu.el --- corfu 関連のコマンド
-;;; -*- lexical-binding: t; -*-
+;;; nsmacs-corfu.el --- corfu 関連のコマンド -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
 ;;; Code:
 
 (require 'corfu)
+
+(defvar read-passwd-map)
 
 ;; https://github.com/minad/corfu?tab=readme-ov-file#completing-in-the-minibuffer
 ;;;###autoload

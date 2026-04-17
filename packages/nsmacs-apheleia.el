@@ -1,5 +1,4 @@
-;;; nsmacs-apheleia.el --- apheleia 関連のコマンド
-;;; -*- lexical-binding: t; -*-
+;;; nsmacs-apheleia.el --- apheleia 関連のコマンド -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 

@@ -4,6 +4,9 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'evil-core))
+
 (require 'cl-lib)
 (require 's)
 (require 'general)

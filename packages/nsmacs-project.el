@@ -7,16 +7,25 @@
 (require 'project)
 (require 'komunan-lisp-library)
 
+(defun e:list-known-projects ()
+  "`ghq' で管理しているリポジトリと worktree の一覧を返す."
+  (->> (kllib:shell-command-to-list "ghq list --full-path")
+       (--map (file-name-as-directory (f-short it)))
+       (--map (cons it
+                    (->> (file-expand-wildcards (expand-file-name ".git/worktrees/*/gitdir" it))
+                         (--map (string-trim (f-read-text it)))
+                         (--map (file-name-directory it))
+                         (--map (file-name-as-directory (f-short it))))))
+       (-flatten)
+       (-sort 's-less?)))
+
 ;;;###autoload
-(defun e:setup-project-known-projects ()
-  "`ghq' で管理しているリポジトリを `project.el' で選択できるように設定する."
+(defun ad:project-prompt-project-dir@update (&rest _)
+  "`project-prompt-project-dir' の直前に `project--list' を更新する."
   (when (executable-find "ghq")
+    (project--ensure-read-project-list)
     (setq project--list
-          (->> (kllib:shell-command-to-list "ghq list --full-path")
-               (-map 'f-short)
-               (-map 'file-name-as-directory)
-               (-sort 's-less?)
-               (-map #'list)))))
+          (-uniq (-concat project--list (-map #'list (e:list-known-projects)))))))
 
 ;;;###autoload
 (defun e:project-edit-dir-locals ()

@@ -9,6 +9,14 @@
 (require 'dash)
 (require 'f)
 (require 'marginalia)
+(require 'nsmacs-project)
+
+;;;###autoload
+(defun ad:magit-update-repository-directories (&rest _)
+  "`magit-repository-directories' を `e:list-known-projects' の内容で更新する."
+  (setopt magit-repository-directories
+          (->> (e:list-known-projects)
+               (--map (cons it 0)))))
 
 ;;;###autoload
 (defun ad:magit-repos-alist@override (&rest _)
@@ -16,14 +24,6 @@
   (magit-list-repos-uniquify
    (--map (cons (f-short it) it)
           (magit-list-repos))))
-
-;;;###autoload
-(defun e:setup-magit-repository-directories ()
-  "`magit' でリポジトリを探すパスを `ghq` をもとに設定する."
-  (when (executable-find "ghq")
-    (setopt magit-repository-directories
-            (->> (kllib:shell-command-to-list "ghq root --all")
-                 (--map (cons it 5))))))
 
 ;;;###autoload
 (defun e:setup-marginalia-magit ()

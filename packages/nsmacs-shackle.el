@@ -5,8 +5,6 @@
 ;;; Code:
 
 (require 'shackle)
-(require 'shell-pop)
-(require 'vterm)
 (require 'dash)
 
 (defvar e:shackle-auto-close-windows nil
@@ -24,18 +22,6 @@
   (ignore-errors
     (-each e:shackle-auto-close-windows 'delete-window))
   (setq e:shackle-auto-close-windows nil))
-
-;;;###autoload
-(defun ad:shell-pop@auto-session-name (fn &rest args)
-  "`shell-pop' でセッション名を自動で設定する.
-FN, ARGS はアドバイス対象の関数とその引数."
-  (let* ((tab (tab-bar--current-tab))
-         (identifier (if (alist-get 'explicit-name tab)
-                         (alist-get 'name tab)
-                       "default"))
-         (shell-pop-internal-mode-buffer (format "*vterm-%s*" identifier))
-         (vterm-shell (format "tmux new -A -s emacs-%s" identifier)))
-    (apply fn args)))
 
 (provide 'nsmacs-shackle)
 ;;; nsmacs-shackle.el ends here

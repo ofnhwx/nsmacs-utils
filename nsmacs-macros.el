@@ -109,6 +109,41 @@ COMMAND が指定されていない場合は NAME をそのままコマンドと
      (pop-to-buffer-same-window
       (e:vterm-exec ,(format "%s" name) ,(format "%s" (or command name))))))
 
+(defmacro e:load-env-file (path &optional base-path)
+  "PATH の .env をバイトコンパイル時に読んで setenv 列に展開する.
+BASE-PATH は $PATH 展開時のベースとなるシステム PATH 文字列."
+  (let* ((file (expand-file-name path))
+         (base-path (or base-path "/usr/local/bin:/usr/bin:/usr/local/sbin"))
+         (process-environment
+          (cons (concat "PATH=" base-path) process-environment))
+         forms has-path)
+    (unless (file-readable-p file)
+      (warn "e:load-env-file: %s not readable at compile time" file))
+    (when (file-readable-p file)
+      (with-temp-buffer
+        (insert-file-contents file)
+        (goto-char (point-min))
+        (while (re-search-forward
+                "^\\s-*\\([A-Za-z_][A-Za-z0-9_]*\\)=\\(.*\\)$" nil t)
+          (let ((key (match-string 1))
+                (val (match-string 2)))
+            (when (string-match "\\`\\([\"']\\)\\(.*\\)\\1\\'" val)
+              (setq val (match-string 2 val)))
+            (let ((expanded (substitute-env-vars val)))
+              (when (equal key "PATH")
+                (setq expanded
+                      (mapconcat #'directory-file-name
+                                 (delete-dups (parse-colon-path expanded))
+                                 ":")))
+              (push `(setenv ,key ,expanded) forms))
+            (when (equal key "PATH") (setq has-path t)))))
+      (when has-path
+        (push `(setq exec-path
+                     (append (parse-colon-path (getenv "PATH"))
+                             (list exec-directory)))
+              forms)))
+    `(progn ,@(nreverse forms))))
+
 (defmacro e:setup-project-rails-annotation (type dir &optional suffix command)
   "`project-rails-find-{TYPE}' で使用する `marginalia' の設定を用意する.
 DIR は文字列または文字列のリスト、SUFFIX はよい感じに設定してください.

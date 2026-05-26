@@ -5,24 +5,24 @@
 ;;; Code:
 
 (require 'prodigy)
-(require 'nsmacs-vterm)
+(require 'nsmacs-ghostel)
 (require 'skk)
 
 ;;;###autoload
-(defun ad:start-process@with-vterm (name _buffer program &rest args)
-  "`prodigy' のプロセスを `vterm' で起動するためのアドバイス.
+(defun ad:start-process@with-ghostel (name _buffer program &rest args)
+  "`prodigy' のプロセスを `ghostel' で起動するためのアドバイス.
 NAME, PROGRAM, ARGS は `start-process' と同じ."
   (save-window-excursion
-    (with-current-buffer (apply #'e:vterm-exec name program args)
-      vterm--process)))
+    (with-current-buffer (apply #'e:ghostel-exec name program args)
+      ghostel--process)))
 
 ;;;###autoload
-(defun ad:prodigy-start-service@with-vterm (fn &rest args)
-  "`prodigy' のプロセスを `vterm' で起動する.
+(defun ad:prodigy-start-service@with-ghostel (fn &rest args)
+  "`prodigy' のプロセスを `ghostel' で起動する.
 FN, ARGS はアドバイス対象の関数とその引数."
-  (advice-add 'start-process :override #'ad:start-process@with-vterm)
+  (advice-add 'start-process :override #'ad:start-process@with-ghostel)
   (prog1 (ignore-errors (apply fn args))
-    (advice-remove 'start-process #'ad:start-process@with-vterm)))
+    (advice-remove 'start-process #'ad:start-process@with-ghostel)))
 
 ;;;###autoload
 (defvar yaskkserv2-dictionary (expand-file-name "~/dictionary.yaskkserv2")

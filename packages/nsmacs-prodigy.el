@@ -5,24 +5,28 @@
 ;;; Code:
 
 (require 'prodigy)
-(require 'nsmacs-ghostel)
 (require 'skk)
 
 ;;;###autoload
-(defun ad:start-process@with-ghostel (name _buffer program &rest args)
-  "`prodigy' のプロセスを `ghostel' で起動するためのアドバイス.
-NAME, PROGRAM, ARGS は `start-process' と同じ."
-  (save-window-excursion
-    (with-current-buffer (apply #'e:ghostel-exec name program args)
-      ghostel--process)))
+(defun ad:start-process@with-pty (name buffer program &rest args)
+  "`prodigy' のプロセスを pty で起動するためのアドバイス.
+NAME, BUFFER, PROGRAM, ARGS は `start-process' と同じ.
+pty の winsize を明示的に設定する (デフォルトの 0x0 だと `overmind' 内
+tmux の `refresh -C 0,0' が弾かれて 2 つ目以降の neww が実行されない)."
+  (let ((proc (make-process :name name
+                            :buffer buffer
+                            :command (cons program args)
+                            :connection-type 'pty)))
+    (set-process-window-size proc 24 80)
+    proc))
 
 ;;;###autoload
-(defun ad:prodigy-start-service@with-ghostel (fn &rest args)
-  "`prodigy' のプロセスを `ghostel' で起動する.
+(defun ad:prodigy-start-service@with-pty (fn &rest args)
+  "`prodigy' のプロセスを pty で起動する.
 FN, ARGS はアドバイス対象の関数とその引数."
-  (advice-add 'start-process :override #'ad:start-process@with-ghostel)
+  (advice-add 'start-process :override #'ad:start-process@with-pty)
   (prog1 (ignore-errors (apply fn args))
-    (advice-remove 'start-process #'ad:start-process@with-ghostel)))
+    (advice-remove 'start-process #'ad:start-process@with-pty)))
 
 ;;;###autoload
 (defvar yaskkserv2-dictionary (expand-file-name "~/dictionary.yaskkserv2")

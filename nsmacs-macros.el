@@ -37,6 +37,12 @@
   (declare (indent defun))
   `(eval '(progn ,@body)))
 
+(defmacro e:shell-output! (command)
+  "COMMAND をマクロ展開時に実行し、trim した stdout を文字列リテラルとして埋め込む.
+出力が空の場合は nil を埋め込む."
+  (let ((output (string-trim (shell-command-to-string command))))
+    (and (not (string-empty-p output)) output)))
+
 (defmacro e:major-mode-key-def (modes key def &rest bindings)
   "MODES で指定したメジャーモード用のキーバイドを設定する.
 KEY, DEF の組み合わせをを一つのペアとし、BINDINGS をして任意の回数繰り返し指定できる."

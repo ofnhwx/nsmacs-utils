@@ -26,6 +26,12 @@
   (find-file-existing (f-expand "init.org" user-emacs-directory)))
 
 ;;;###autoload
+(defun e:file/find-lib-directory ()
+  "ライブラリのディレクトリを開く."
+  (interactive)
+  (find-file-existing (f-expand borg-drones-directory)))
+
+;;;###autoload
 (defun e:file/find-utils-directory ()
   "`nsmacs-utils' のディレクトリを開く."
   (interactive)
